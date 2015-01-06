@@ -58,8 +58,7 @@ def scanSub():
             if not cur.fetchone():
                 pbody = post.body.lower()
                 pattern = re.compile(r'(?<=^weather!).*$')
-                pattern.search(reddit_comment) if (\S) 
-						pass
+                pattern.search(reddit_comment)
                     if pauthor.lower() != USERNAME.lower():
                         pass
 						print:(' Found Keyword... ')
