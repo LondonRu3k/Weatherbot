@@ -55,20 +55,20 @@ def scanSub():
             cur.execute('SELECT * FROM oldposts WHERE ID=?', [pid])
             if not cur.fetchone():
                 pbody = post.body.lower()
-				searchObj = re.match(r'weather!', line, re.M|re.I)
-				if searchObj:
-					print "Post Found!" 
-					compiledsearchObj = re.compile(r'(?<=^weather!).*$')
-					if compiledsearchObj:
-						if pauthor.lower() != USERNAME.lower():
-						post.reply(compiledsearchObj)
-						else:
-							print ' Will not reply to self'
-                cur.execute('INSERT INTO oldposts VALUES(?)', [pid])
-        except AttributeError:
-            #Author is deleted. We don't care about this
-            pass
-    sql.commit()
+					searchObj = re.match(r'weather!', line, re.M|re.I)
+					if searchObj:
+						print "Post Found!" 
+						compiledsearchObj = re.compile(r'(?<=^weather!).*$')
+						if compiledsearchObj:
+							if pauthor.lower() != USERNAME.lower():
+							post.reply(compiledsearchObj)
+							else:
+								print ' Will not reply to self'
+					cur.execute('INSERT INTO oldposts VALUES(?)', [pid])
+			except AttributeError:
+				#Author is deleted. We don't care about this
+				pass
+	sql.commit()
 	
 	
 
