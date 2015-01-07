@@ -11,11 +11,9 @@ USERNAME  = "WeatherReportBot"
 #This is the bot's Username. In order to send mail, he must have some amount of Karma.
 PASSWORD  = "woodeye"
 #This is the bot's Password. 
-USERAGENT = "Weather Report Bot"
+USERAGENT = "LondonRuek"
 #This is a short description of what the bot does. For example "/u/GoldenSights' Newsletter bot"
 SUBREDDIT = "GoldTesting"
-#This is the sub or list of subs to scan for new posts. For a single sub, use "sub1". For multiple subreddits, use "sub1+sub2+sub3+..."
-REPLYSTRING = ['[Here is your Weather Report](www.thefuckingweather.com/?where=)']
 #This is the word you want to put in reply
 MAXPOSTS = 100
 #This is how many posts you want to retrieve all at once. PRAW can download 100 at a time.
@@ -57,23 +55,20 @@ def scanSub():
             cur.execute('SELECT * FROM oldposts WHERE ID=?', [pid])
             if not cur.fetchone():
                 pbody = post.body.lower()
-                pattern = re.compile(r'(?<=^weather!).*$')
-                pattern.search(reddit_comment)
-                    if pauthor.lower() != USERNAME.lower():
-                        pass
-						print:(' Found Keyword... ')
-                    else:
-                        print('Will not reply to self')
+				searchObj = re.match(r'weather!', line, re.M|re.I)
+				if searchObj:
+					print "Post Found!" 
+					compiledsearchObj = re.compile(r'(?<=^weather!).*$')
+					if compiledsearchObj:
+						if pauthor.lower() != USERNAME.lower():
+						post.reply(compiledsearchObj)
+						else:
+							print ' Will not reply to self'
                 cur.execute('INSERT INTO oldposts VALUES(?)', [pid])
         except AttributeError:
             #Author is deleted. We don't care about this
             pass
     sql.commit()
-	
-	
-def body():
-	print(' Replying to' + pid + 'by ' + pauthor)
-	post.reply( "(Here is your Weather Report)[www.thefuckingweather.com/?where=" + pattern )
 	
 	
 
