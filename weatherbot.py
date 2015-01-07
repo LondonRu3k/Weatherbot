@@ -55,7 +55,7 @@ def scanSub():
             cur.execute('SELECT * FROM oldposts WHERE ID=?', [pid])
             if not cur.fetchone():
                 pbody = post.body.lower()
-					searchObj = re.match(r'weather!', line, re.M|re.I)
+				searchObj = re.match(r'weather!', line, re.M|re.I)
 					if searchObj:
 						print "Post Found!" 
 						compiledsearchObj = re.compile(r'(?<=^weather!).*$')
