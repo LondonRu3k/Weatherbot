@@ -61,9 +61,15 @@ def scanSub():
 			print "Post Found"
 			if pauthor.lower() != USERNAME.lower():
 				print ' Replying to comment'
+				# This is the api connection to wunderground.com
 				f = 
-				urllib2.urlopen('http://api.wunderground.com/api/0875dc1c4956be3b/geolookup/condiftions/q/' + SC + '/' + CC + '.json')
-				post.reply("[Here is your FUCKIN Weather Report!!!](http://thefuckingweather.com/?where=" +  searchObj + ")")
+				urllib2.urlopen('http://api.wunderground.com/api/0875dc1c4956be3b/geolookup/condiftions/q/' + searchObj + '.json')
+				json_string = f.read()
+				parsed_json = json.loads(json_string)
+				location = parsed_json['location']['city']
+				temp_f = parsed_json['current_observation']['temperature_string']['wind_mph']['icon']['precip_today_string']
+				post.reply( "Current Temperature in " + location + " is " + temperature_string + " with " + wind_mph + " winds. It is " + icon + " with " + precip_today_string + "rain today so far."
+				f.close()
 			if not pauthor.lower() != USERNAME.lower():
 				print ' Will not reply to self'
 			cur.execute('INSERT INTO oldposts VALUES(?)', [pid])
