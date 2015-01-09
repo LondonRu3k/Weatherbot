@@ -14,7 +14,7 @@ PASSWORD  = "woodeye"
 #This is the bot's Password. 
 USERAGENT = "LondonRuek"
 #This is a short description of what the bot does. For example "/u/GoldenSights' Newsletter bot"
-SUBREDDIT = "Learnpython"
+SUBREDDIT = "botwatch"
 #This is the word you want to put in reply
 MAXPOSTS = 100
 #This is how many posts you want to retrieve all at once. PRAW can download 100 at a time.
@@ -62,13 +62,15 @@ def scanSub():
 			if pauthor.lower() != USERNAME.lower():
 				print ' Replying to comment'
 				# This is the api connection to wunderground.com
-				f = 
-				urllib2.urlopen('http://api.wunderground.com/api/0875dc1c4956be3b/geolookup/condiftions/q/' + searchObj + '.json')
+				f = urllib2.urlopen('http://api.wunderground.com/api/0875dc1c4956be3b/geolookup/conditions/q/' + searchObj + '.json')
 				json_string = f.read()
 				parsed_json = json.loads(json_string)
 				location = parsed_json['location']['city']
-				temp_f = parsed_json['current_observation']['temperature_string']['wind_mph']['icon']['precip_today_string']
-				post.reply( "Current Temperature in " + location + " is " + temperature_string + " with " + wind_mph + " winds. It is " + icon + " with " + precip_today_string + "rain today so far."
+				temp = parsed_json['current_observation']['temperature_string']
+				wind_mph = parsed_json['current_observation']['wind_string']
+				icon = parsed_json['current_observation']['icon']
+				precip = parsed_json['current_observation']['precip_today_string']
+				post.reply( "Current Temperature in " + location + " is " + temp  + " with winds " + wind_mph  + ". It is " + icon + " with " + precip + "rain today so far.")
 				f.close()
 			if not pauthor.lower() != USERNAME.lower():
 				print ' Will not reply to self'
@@ -80,7 +82,7 @@ sql.commit()
 	
 	
 
-	
+0	
 
 while True:
     try:
