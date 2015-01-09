@@ -1,9 +1,10 @@
+import urllib2
+import json
 import traceback
 import praw # simple interface to the reddit API, also handles rate limiting of requests
 import time
 import re
 import sqlite3
-import weatherapi
 from operator import itemgetter 
 '''USER CONFIGURATION'''
 
@@ -13,7 +14,7 @@ PASSWORD  = "woodeye"
 #This is the bot's Password. 
 USERAGENT = "LondonRuek"
 #This is a short description of what the bot does. For example "/u/GoldenSights' Newsletter bot"
-SUBREDDIT = "GoldTesting"
+SUBREDDIT = "Learnpython"
 #This is the word you want to put in reply
 MAXPOSTS = 100
 #This is how many posts you want to retrieve all at once. PRAW can download 100 at a time.
@@ -55,20 +56,21 @@ def scanSub():
             cur.execute('SELECT * FROM oldposts WHERE ID=?', [pid])
             if not cur.fetchone():
                 pbody = post.body.lower()
-				searchObj = re.match(r'weather!', line, re.M|re.I)
-					if searchObj:
-						print "Post Found!" 
-						compiledsearchObj = re.compile(r'(?<=^weather!).*$')
-						if compiledsearchObj:
-							if pauthor.lower() != USERNAME.lower():
-							post.reply(compiledsearchObj)
-							else:
-								print ' Will not reply to self'
-					cur.execute('INSERT INTO oldposts VALUES(?)', [pid])
-			except AttributeError:
-				#Author is deleted. We don't care about this
-				pass
-	sql.commit()
+		searchObj = re.match( r'(?:weather! )(.*\S)', pbody).group(1)
+		if searchObj:
+			print "Post Found"
+			if pauthor.lower() != USERNAME.lower():
+				print ' Replying to comment'
+				f = 
+				urllib2.urlopen('http://api.wunderground.com/api/0875dc1c4956be3b/geolookup/condiftions/q/' + SC + '/' + CC + '.json')
+				post.reply("[Here is your FUCKIN Weather Report!!!](http://thefuckingweather.com/?where=" +  searchObj + ")")
+			if not pauthor.lower() != USERNAME.lower():
+				print ' Will not reply to self'
+			cur.execute('INSERT INTO oldposts VALUES(?)', [pid])
+	except AttributeError:
+		#Author is deleted. We don't care about this
+		pass
+sql.commit()
 	
 	
 
