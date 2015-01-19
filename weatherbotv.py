@@ -56,14 +56,15 @@ def scanSub():
             cur.execute('SELECT * FROM oldposts WHERE ID=?', [pid])
             if not cur.fetchone():
                 pbody = post.body.lower()
-		searchObj = re.match( r'(?:weather! )(.*\S)', pbody).group(1)
+		searchObj = re.match( r'(?:weather! )(.*)', pbody).group()
 		if searchObj:
-			print "Post Found"
+		  replaceObj = re.sub(r'\s+', '%20', searchObj)
+		  print "Post Found"
 			if pauthor.lower() != USERNAME.lower():
 				print ' Replying to comment'
 				try:
 					# This is the api connection to wunderground.com
-					f = urllib2.urlopen('http://api.wunderground.com/api/0875dc1c4956be3b/geolookup/conditions/q/' + searchObj + '.json')
+					f = urllib2.urlopen('http://api.wunderground.com/api/0875dc1c4956be3b/geolookup/conditions/q/' + replaceObj + '.json')
 					json_string = f.read()
 					parsed_json = json.loads(json_string)
 					temp = parsed_json['current_observation']['temperature_string']
