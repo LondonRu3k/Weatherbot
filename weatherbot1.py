@@ -14,7 +14,7 @@ PASSWORD  = "woodeye"
 #This is the bot's Password. 
 USERAGENT = "LondonRuek"
 #This is a short description of what the bot does. For example "/u/GoldenSights' Newsletter bot"
-SUBREDDIT = "botwatch+learnpython+flying"
+SUBREDDIT = "botwatch+learnpython+flying+goldtesting"
 #This is the word you want to put in reply
 MAXPOSTS = 100
 #This is how many posts you want to retrieve all at once. PRAW can download 100 at a time.
@@ -60,9 +60,9 @@ def scanSub():
 		if searchObj:
 		  replaceObj = re.sub(r'\s+', '%20', searchObj)
 		  print "Post Found"
-		    if pauthor.lower() != USERNAME.lower():
+		  if pauthor.lower() != USERNAME.lower():
 			      print ' Replying to comment'
-				try:
+		              try:
 					# This is the api connection to wunderground.com
 					f = urllib2.urlopen('http://api.wunderground.com/api/0875dc1c4956be3b/geolookup/conditions/q/' + replaceObj + '.json')
 					json_string = f.read()
@@ -74,13 +74,13 @@ def scanSub():
 					precip = parsed_json['current_observation']['precip_today_string']
 					post.reply( "Current Temperature in " + location + " is " + temp  + " with winds " + wind_mph  + ". It is " + icon + " with " + precip + "rain today so far.")
 					f.close()
-				except KeyError:
+			      except KeyError:
 					pass
 					print ' Passing Comment with invalid syntax'
 					post.reply("Sorry this place either does not exist or is not available from wunderground.com")
-			if not pauthor.lower() != USERNAME.lower():
+		  if not pauthor.lower() != USERNAME.lower():
 				print ' Will not reply to self'
-			cur.execute('INSERT INTO oldposts VALUES(?)', [pid])
+		  cur.execute('INSERT INTO oldposts VALUES(?)', [pid])
 	except AttributeError:
 		#Author is deleted. We don't care about this
 		pass
