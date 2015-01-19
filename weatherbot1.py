@@ -60,8 +60,8 @@ def scanSub():
 		if searchObj:
 		  replaceObj = re.sub(r'\s+', '%20', searchObj)
 		  print "Post Found"
-			if pauthor.lower() != USERNAME.lower():
-				print ' Replying to comment'
+		    if pauthor.lower() != USERNAME.lower():
+			      print ' Replying to comment'
 				try:
 					# This is the api connection to wunderground.com
 					f = urllib2.urlopen('http://api.wunderground.com/api/0875dc1c4956be3b/geolookup/conditions/q/' + replaceObj + '.json')
